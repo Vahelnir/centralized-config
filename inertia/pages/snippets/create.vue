@@ -2,7 +2,7 @@
 import { useForm } from '@inertiajs/vue3'
 import Block from '~/components/ui/block.vue'
 import Input from '~/components/ui/input.vue'
-import Textarea from '~/components/ui/textarea.vue'
+import JsonEditor from '~/components/ui/json_editor.vue'
 import { rpc } from '~/rpc'
 
 const form = useForm({
@@ -23,7 +23,7 @@ const form = useForm({
       </label>
       <label class="flex flex-col py-2">
         Contenu du snippet:
-        <Textarea name="content" id="content" v-model="form.content"></Textarea>
+        <JsonEditor v-model="form.content" />
         <div class="text-red-500" v-if="form.errors.content">{{ form.errors.content?.[0] }}</div>
       </label>
 
