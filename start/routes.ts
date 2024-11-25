@@ -11,7 +11,7 @@ import router from '@adonisjs/core/services/router'
 
 const AuthController = () => import('#controllers/auth_controller')
 
-router.on('/').render('pages/home').use(middleware.auth()).as('home')
+router.on('/').renderInertia('home').use(middleware.auth()).as('home')
 
 router
   .group(() => {
