@@ -10,6 +10,7 @@ import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
 
 const AuthController = () => import('#controllers/auth_controller')
+const SnippetsController = () => import('#controllers/snippets_controller')
 
 router.on('/').renderInertia('home').use(middleware.auth()).as('home')
 
@@ -30,6 +31,12 @@ router
   .as('auth')
 
 router
-  .get('/google/callback', [AuthController, 'googleCallback'])
-  .use(middleware.guest())
-  .as('google.callback')
+  .group(() => {
+    router.get('/', [SnippetsController, 'index_view']).as('index')
+
+    router.get('/create', [SnippetsController, 'create_view']).as('create')
+    router.post('/create', [SnippetsController, 'create']).as('store')
+  })
+  .prefix('/snippets')
+  .use(middleware.auth())
+  .as('snippets')
