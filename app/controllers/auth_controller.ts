@@ -2,20 +2,20 @@ import User from '#models/user'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class AuthController {
-  public async login({ view }: HttpContext) {
-    return view.render('pages/auth/login')
+  login({ inertia }: HttpContext) {
+    return inertia.render('auth/login')
   }
 
-  public async logout({ auth, response }: HttpContext) {
+  async logout({ auth, response }: HttpContext) {
     await auth.use('web').logout()
     return response.redirect().toRoute('home')
   }
 
-  public async googleRedirect({ ally }: HttpContext) {
+  googleRedirect({ ally }: HttpContext) {
     return ally.use('google').redirect()
   }
 
-  public async googleCallback({ ally, auth, response }: HttpContext) {
+  async googleCallback({ ally, auth, response }: HttpContext) {
     const google = ally.use('google')
     if (google.accessDenied()) {
       return 'You have cancelled the login process'
