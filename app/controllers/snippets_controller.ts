@@ -4,7 +4,7 @@ import { HttpContext } from '@adonisjs/core/http'
 
 export default class SnippetsController {
   async index_view({ inertia }: HttpContext) {
-    const items = await Snippet.all()
+    const items = await Snippet.query().orderBy('created_at', 'desc')
     return inertia.render('snippets/index', { items })
   }
 
