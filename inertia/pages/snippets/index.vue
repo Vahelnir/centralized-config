@@ -23,10 +23,21 @@ defineProps<{
         <div class="flex p-2">
           <input type="checkbox" />
         </div>
-        <div class="flex p-2">
+        <div class="flex flex-1 p-2 justify-between">
           <h3 class="text-lg">
             {{ item.name }}
           </h3>
+          <div>
+            <Link
+              :href="
+                rpc.$url('snippets.edit', {
+                  params: { id: item.id },
+                })
+              "
+            >
+              Modifier
+            </Link>
+          </div>
         </div>
       </div>
       <div v-else>Il n'y a pas de snippet à selectionner :(</div>

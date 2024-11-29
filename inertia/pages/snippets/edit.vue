@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import type SnippetsController from '#controllers/snippets_controller'
+import { InferPageProps } from '@adonisjs/inertia/types'
 import { useForm } from '@inertiajs/vue3'
 import Block from '~/components/ui/block.vue'
 import Input from '~/components/ui/input.vue'
 import JsonEditor from '~/components/ui/json_editor.vue'
 import { rpc } from '~/rpc'
 
+const { item } = defineProps<{
+  item: InferPageProps<SnippetsController, 'edit_view'>['item']
+}>()
+
 const form = useForm({
-  name: '',
-  content: '',
+  name: item.name,
+  content: item.content,
 })
 </script>
 
@@ -15,7 +21,10 @@ const form = useForm({
   <Block>
     <template #title> Créer un snippet </template>
 
-    <form @submit.prevent="form.post(rpc.$url('snippets.post'))" class="flex flex-col">
+    <form
+      @submit.prevent="form.put(rpc.$url('snippets.edit', { params: { id: item.id } }))"
+      class="flex flex-col"
+    >
       <label class="flex flex-col py-2">
         Nom du snippet:
         <Input type="text" v-model="form.name" placeholder="Nom du snippet" />
@@ -32,7 +41,7 @@ const form = useForm({
         class="bg-green-500 hover:bg-green-400 rounded py-2 px-4"
         :disabled="form.processing"
       >
-        Créer
+        Modifier
       </button>
     </form>
   </Block>

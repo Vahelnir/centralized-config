@@ -34,8 +34,13 @@ router
   .group(() => {
     router.get('/', [SnippetsController, 'index_view']).as('index')
 
+    /* views */
     router.get('/create', [SnippetsController, 'create_view']).as('create')
-    router.post('/create', [SnippetsController, 'create']).as('store')
+    router.get('/:id', [SnippetsController, 'edit_view']).as('edit')
+
+    /* actions */
+    router.post('/', [SnippetsController, 'create']).as('post')
+    router.put('/:id', [SnippetsController, 'update']).as('put')
   })
   .prefix('/snippets')
   .use(middleware.auth())

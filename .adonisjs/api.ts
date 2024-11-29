@@ -25,9 +25,17 @@ type SnippetsCreateGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['create_view'], false>
 }
-type SnippetsCreatePost = {
+type SnippetsPost = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['create'], false>
+}
+type SnippetsIdGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['edit_view'], false>
+}
+type SnippetsIdPut = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/snippet.ts')['updateSnippetRequestValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['update'], true>
 }
 export interface ApiDefinition {
   'auth': {
@@ -68,7 +76,14 @@ export interface ApiDefinition {
       };
       '$get': SnippetsCreateGetHead;
       '$head': SnippetsCreateGetHead;
-      '$post': SnippetsCreatePost;
+    };
+    '$post': SnippetsPost;
+    ':id': {
+      '$url': {
+      };
+      '$get': SnippetsIdGetHead;
+      '$head': SnippetsIdGetHead;
+      '$put': SnippetsIdPut;
     };
   };
 }
@@ -124,10 +139,24 @@ const routes = [
   },
   {
     params: [],
-    name: 'snippets.store',
-    path: '/snippets/create',
+    name: 'snippets.post',
+    path: '/snippets',
     method: ["POST"],
-    types: {} as SnippetsCreatePost,
+    types: {} as SnippetsPost,
+  },
+  {
+    params: ["id"],
+    name: 'snippets.edit',
+    path: '/snippets/:id',
+    method: ["GET","HEAD"],
+    types: {} as SnippetsIdGetHead,
+  },
+  {
+    params: ["id"],
+    name: 'snippets.put',
+    path: '/snippets/:id',
+    method: ["PUT"],
+    types: {} as SnippetsIdPut,
   },
 ] as const;
 export const api = {
