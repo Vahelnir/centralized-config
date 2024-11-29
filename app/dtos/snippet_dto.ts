@@ -7,6 +7,7 @@ export class SnippetDto {
     return {
       id: this.snippet.id,
       name: this.snippet.name,
+      description: this.snippet.description,
       content: this.snippet.content,
       // NOTE: toISO() returns string or null for some reason
       createdAt: this.snippet.createdAt.toJSDate().toISOString(),

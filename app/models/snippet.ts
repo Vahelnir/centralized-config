@@ -12,6 +12,9 @@ export default class Snippet extends BaseModel {
   declare name: string
 
   @column()
+  declare description: string
+
+  @column()
   declare content: string
 
   @column.dateTime({ autoCreate: true })

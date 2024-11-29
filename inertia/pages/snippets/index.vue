@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type SnippetsController from '#controllers/snippets_controller'
+import { InferPageProps } from '@adonisjs/inertia/types'
 import Block from '~/components/ui/block.vue'
 import Link from '~/components/ui/link.vue'
 import { rpc } from '~/rpc'
 
 defineProps<{
-  items: { id: number; name: string }[]
+  items: InferPageProps<SnippetsController, 'index_view'>['items']
 }>()
 </script>
 
@@ -23,21 +25,24 @@ defineProps<{
         <div class="flex p-2">
           <input type="checkbox" />
         </div>
-        <div class="flex flex-1 p-2 justify-between">
-          <h3 class="text-lg">
+        <div class="flex flex-col flex-1 p-2 justify-between">
+          <h3 class="text-lg font-semibold">
             {{ item.name }}
           </h3>
-          <div>
-            <Link
-              :href="
-                rpc.$url('snippets.edit', {
-                  params: { id: item.id },
-                })
-              "
-            >
-              Modifier
-            </Link>
-          </div>
+          <p>
+            {{ item.description }}
+          </p>
+        </div>
+        <div class="pt-2">
+          <Link
+            :href="
+              rpc.$url('snippets.edit', {
+                params: { id: item.id },
+              })
+            "
+          >
+            Modifier
+          </Link>
         </div>
       </div>
       <div v-else>Il n'y a pas de snippet à selectionner :(</div>

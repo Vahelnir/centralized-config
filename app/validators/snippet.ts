@@ -3,6 +3,7 @@ import { jsonRule } from './rules/json.js'
 
 const snippetFields = vine.object({
   name: vine.string().trim().minLength(4),
+  description: vine.string().trim().minLength(4),
   content: vine.string().minLength(2).use(jsonRule()).trim(),
 })
 

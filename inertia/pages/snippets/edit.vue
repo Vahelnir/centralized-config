@@ -5,6 +5,7 @@ import { useForm } from '@inertiajs/vue3'
 import Block from '~/components/ui/block.vue'
 import Input from '~/components/ui/input.vue'
 import JsonEditor from '~/components/ui/json_editor.vue'
+import Textarea from '~/components/ui/textarea.vue'
 import { rpc } from '~/rpc'
 
 const { item } = defineProps<{
@@ -13,6 +14,7 @@ const { item } = defineProps<{
 
 const form = useForm({
   name: item.name,
+  description: item.description,
   content: item.content,
 })
 </script>
@@ -29,6 +31,13 @@ const form = useForm({
         Nom du snippet:
         <Input type="text" v-model="form.name" placeholder="Nom du snippet" />
         <div class="text-red-500" v-if="form.errors.name">{{ form.errors.name?.[0] }}</div>
+      </label>
+      <label class="flex flex-col py-2">
+        Description:
+        <Textarea v-model="form.description"></Textarea>
+        <div class="text-red-500" v-if="form.errors.description">
+          {{ form.errors.description?.[0] }}
+        </div>
       </label>
       <label class="flex flex-col py-2">
         Contenu du snippet:
