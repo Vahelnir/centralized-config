@@ -17,4 +17,6 @@ export const updateSnippetRequestValidator = vine.compile(
   })
 )
 
+export const deleteSnippetRequestValidator = updateSnippetRequestValidator
+
 export const updateSnippetPayloadValidator = vine.compile(snippetFields)

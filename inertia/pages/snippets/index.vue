@@ -1,20 +1,31 @@
 <script setup lang="ts">
 import type SnippetsController from '#controllers/snippets_controller'
-import { InferPageProps } from '@adonisjs/inertia/types'
+import type { InferPageProps } from '@adonisjs/inertia/types'
+import { Link, router } from '@inertiajs/vue3'
 import Block from '~/components/ui/block.vue'
-import Link from '~/components/ui/link.vue'
+import Button from '~/components/ui/button.vue'
 import { rpc } from '~/rpc'
 
 defineProps<{
   items: InferPageProps<SnippetsController, 'index_view'>['items']
 }>()
+
+function deleteSnippet(id: string) {
+  if (!confirm('Êtes-vous sûr de vouloir supprimer ce snippet ?')) {
+    return
+  }
+
+  router.delete(rpc.$url('snippets.delete', { params: { id } }), { only: ['items'] })
+}
 </script>
 
 <template>
   <Block>
     <template #title> Bibliothèque de snippet </template>
 
-    <Link :href="rpc.$url('snippets.create')"> Créer un snippet </Link>
+    <Link :href="rpc.$url('snippets.create')">
+      <Button variant="success">Ajouter un snippet</Button>
+    </Link>
 
     <div class="flex flex-col">
       <div
@@ -41,8 +52,9 @@ defineProps<{
               })
             "
           >
-            Modifier
+            <Button variant="info" as="span">Modifier</Button>
           </Link>
+          <Button variant="danger" @click="deleteSnippet(item.id)">Supprimer</Button>
         </div>
       </div>
       <div v-else>Il n'y a pas de snippet à selectionner :(</div>

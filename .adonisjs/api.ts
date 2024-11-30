@@ -25,17 +25,21 @@ type SnippetsCreateGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['create_view'], false>
 }
-type SnippetsPost = {
-  request: unknown
-  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['create'], false>
-}
 type SnippetsIdGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['edit_view'], false>
 }
+type SnippetsPost = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['create'], false>
+}
 type SnippetsIdPut = {
   request: MakeTuyauRequest<InferInput<typeof import('../app/validators/snippet.ts')['updateSnippetRequestValidator']>>
   response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['update'], true>
+}
+type SnippetsIdDelete = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/snippet.ts')['deleteSnippetRequestValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['delete'], true>
 }
 export interface ApiDefinition {
   'auth': {
@@ -77,14 +81,15 @@ export interface ApiDefinition {
       '$get': SnippetsCreateGetHead;
       '$head': SnippetsCreateGetHead;
     };
-    '$post': SnippetsPost;
     ':id': {
       '$url': {
       };
       '$get': SnippetsIdGetHead;
       '$head': SnippetsIdGetHead;
       '$put': SnippetsIdPut;
+      '$delete': SnippetsIdDelete;
     };
+    '$post': SnippetsPost;
   };
 }
 const routes = [
@@ -138,6 +143,13 @@ const routes = [
     types: {} as SnippetsCreateGetHead,
   },
   {
+    params: ["id"],
+    name: 'snippets.edit',
+    path: '/snippets/:id',
+    method: ["GET","HEAD"],
+    types: {} as SnippetsIdGetHead,
+  },
+  {
     params: [],
     name: 'snippets.post',
     path: '/snippets',
@@ -146,17 +158,17 @@ const routes = [
   },
   {
     params: ["id"],
-    name: 'snippets.edit',
-    path: '/snippets/:id',
-    method: ["GET","HEAD"],
-    types: {} as SnippetsIdGetHead,
-  },
-  {
-    params: ["id"],
     name: 'snippets.put',
     path: '/snippets/:id',
     method: ["PUT"],
     types: {} as SnippetsIdPut,
+  },
+  {
+    params: ["id"],
+    name: 'snippets.delete',
+    path: '/snippets/:id',
+    method: ["DELETE"],
+    types: {} as SnippetsIdDelete,
   },
 ] as const;
 export const api = {

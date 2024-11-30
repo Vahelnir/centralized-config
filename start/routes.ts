@@ -41,6 +41,7 @@ router
     /* actions */
     router.post('/', [SnippetsController, 'create']).as('post')
     router.put('/:id', [SnippetsController, 'update']).as('put')
+    router.delete('/:id', [SnippetsController, 'delete']).as('delete')
   })
   .prefix('/snippets')
   .use(middleware.auth())

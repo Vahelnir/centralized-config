@@ -3,6 +3,7 @@ import {
   createSnippetPayloadValidator,
   updateSnippetRequestValidator,
   updateSnippetPayloadValidator,
+  deleteSnippetRequestValidator,
 } from '#validators/snippet'
 import { HttpContext } from '@adonisjs/core/http'
 import { SnippetDto } from '../dtos/snippet_dto.js'
@@ -39,6 +40,17 @@ export default class SnippetsController {
     const payload = await updateSnippetPayloadValidator.validate(request.all())
     item.merge(payload)
     await item.save()
+
+    return response.redirect().toRoute('snippets.index')
+  }
+
+  async delete({ request, response }: HttpContext) {
+    const { params } = await request.validateUsing(deleteSnippetRequestValidator)
+
+    const snippet = await Snippet.find(params.id)
+    if (snippet) {
+      await snippet.delete()
+    }
 
     return response.redirect().toRoute('snippets.index')
   }
