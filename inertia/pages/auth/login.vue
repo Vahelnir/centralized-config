@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 import Block from '~/components/ui/block.vue'
-import Link from '~/components/ui/link.vue'
+import Button from '~/components/ui/button.vue'
 import { rpc } from '~/rpc'
 </script>
 
@@ -11,6 +11,8 @@ import { rpc } from '~/rpc'
   <Block>
     <template #title> Connexion </template>
 
-    <Link :href="rpc.$url('auth.google')" external>S'authentifier avec Google</Link>
+    <a :href="rpc.$url('auth.google')">
+      <Button variant="primary">Connexion avec Google</Button>
+    </a>
   </Block>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3'
 import Block from '~/components/ui/block.vue'
+import Button from '~/components/ui/button.vue'
 import Input from '~/components/ui/input.vue'
 import JsonEditor from '~/components/ui/json_editor.vue'
 import Textarea from '~/components/ui/textarea.vue'
@@ -36,13 +37,14 @@ const form = useForm({
         <div class="text-red-500" v-if="form.errors.content">{{ form.errors.content?.[0] }}</div>
       </label>
 
-      <button
+      <Button
+        variant="success"
         type="submit"
         class="bg-green-500 hover:bg-green-400 rounded py-2 px-4"
         :disabled="form.processing"
       >
         Créer
-      </button>
+      </Button>
     </form>
   </Block>
 </template>
