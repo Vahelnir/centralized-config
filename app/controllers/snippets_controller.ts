@@ -11,7 +11,9 @@ import { SnippetDto } from '../dtos/snippet_dto.js'
 export default class SnippetsController {
   async index_view({ inertia }: HttpContext) {
     const items = await Snippet.query().orderBy('created_at', 'desc')
-    return inertia.render('snippets/index', { items })
+    return inertia.render('snippets/index', {
+      items: items.map((item) => new SnippetDto(item).toJSON()),
+    })
   }
 
   create_view({ inertia }: HttpContext) {
