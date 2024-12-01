@@ -7,12 +7,18 @@ import {
 } from '#validators/snippet'
 import { HttpContext } from '@adonisjs/core/http'
 import { SnippetDto } from '../dtos/snippet_dto.js'
+import SnippetSubscription from '#models/snippet_subscription'
 
 export default class SnippetsController {
-  async index_view({ inertia }: HttpContext) {
+  async index_view({ inertia, auth }: HttpContext) {
     const items = await Snippet.query().orderBy('created_at', 'desc')
+    const subscriptions = await SnippetSubscription.findAllByUser(auth.getUserOrFail().id)
+
     return inertia.render('snippets/index', {
       items: items.map((item) => new SnippetDto(item).toJSON()),
+      subscriptions: Object.fromEntries(
+        subscriptions.map((subscription) => [subscription.snippet_id, true])
+      ) as Record<string, boolean | undefined>,
     })
   }
 
@@ -55,5 +61,27 @@ export default class SnippetsController {
     }
 
     return response.redirect().toRoute('snippets.index')
+  }
+
+  async subscribe({ request, response, auth }: HttpContext) {
+    const { params } = await request.validateUsing(deleteSnippetRequestValidator)
+
+    const snippet = await Snippet.find(params.id)
+    if (snippet) {
+      auth.getUserOrFail().subscribeToSnippet(snippet)
+    }
+
+    return response.redirect().back()
+  }
+
+  async unsubscribe({ request, response, auth }: HttpContext) {
+    const { params } = await request.validateUsing(deleteSnippetRequestValidator)
+
+    const snippet = await Snippet.find(params.id)
+    if (snippet) {
+      auth.getUserOrFail().unsubscribeFromSnippet(snippet)
+    }
+
+    return response.redirect().back()
   }
 }

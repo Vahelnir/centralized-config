@@ -71,6 +71,7 @@
     "@vue/server-renderer": "^3.5.13",
     "better-sqlite3": "^11.5.0",
     "edge.js": "^6.2.0",
+    "es-toolkit": "^1.28.0",
     "luxon": "^3.5.0",
     "monaco-editor": "^0.52.0",
     "reflect-metadata": "^0.2.2",

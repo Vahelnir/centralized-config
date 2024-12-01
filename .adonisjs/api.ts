@@ -25,7 +25,7 @@ type SnippetsCreateGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['create_view'], false>
 }
-type SnippetsIdGetHead = {
+type SnippetsIdEditGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['edit_view'], false>
 }
@@ -40,6 +40,14 @@ type SnippetsIdPut = {
 type SnippetsIdDelete = {
   request: MakeTuyauRequest<InferInput<typeof import('../app/validators/snippet.ts')['deleteSnippetRequestValidator']>>
   response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['delete'], true>
+}
+type SnippetsIdSubscribePost = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/snippet.ts')['deleteSnippetRequestValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['subscribe'], true>
+}
+type SnippetsIdUnsubscribePost = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/snippet.ts')['deleteSnippetRequestValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['unsubscribe'], true>
 }
 export interface ApiDefinition {
   'auth': {
@@ -82,12 +90,26 @@ export interface ApiDefinition {
       '$head': SnippetsCreateGetHead;
     };
     ':id': {
+      'edit': {
+        '$url': {
+        };
+        '$get': SnippetsIdEditGetHead;
+        '$head': SnippetsIdEditGetHead;
+      };
       '$url': {
       };
-      '$get': SnippetsIdGetHead;
-      '$head': SnippetsIdGetHead;
       '$put': SnippetsIdPut;
       '$delete': SnippetsIdDelete;
+      'subscribe': {
+        '$url': {
+        };
+        '$post': SnippetsIdSubscribePost;
+      };
+      'unsubscribe': {
+        '$url': {
+        };
+        '$post': SnippetsIdUnsubscribePost;
+      };
     };
     '$post': SnippetsPost;
   };
@@ -145,9 +167,9 @@ const routes = [
   {
     params: ["id"],
     name: 'snippets.edit',
-    path: '/snippets/:id',
+    path: '/snippets/:id/edit',
     method: ["GET","HEAD"],
-    types: {} as SnippetsIdGetHead,
+    types: {} as SnippetsIdEditGetHead,
   },
   {
     params: [],
@@ -169,6 +191,20 @@ const routes = [
     path: '/snippets/:id',
     method: ["DELETE"],
     types: {} as SnippetsIdDelete,
+  },
+  {
+    params: ["id"],
+    name: 'snippets.subscribe',
+    path: '/snippets/:id/subscribe',
+    method: ["POST"],
+    types: {} as SnippetsIdSubscribePost,
+  },
+  {
+    params: ["id"],
+    name: 'snippets.unsubscribe',
+    path: '/snippets/:id/unsubscribe',
+    method: ["POST"],
+    types: {} as SnippetsIdUnsubscribePost,
   },
 ] as const;
 export const api = {

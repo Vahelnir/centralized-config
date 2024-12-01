@@ -36,12 +36,16 @@ router
 
     /* views */
     router.get('/create', [SnippetsController, 'create_view']).as('create')
-    router.get('/:id', [SnippetsController, 'edit_view']).as('edit')
+    router.get('/:id/edit', [SnippetsController, 'edit_view']).as('edit')
 
-    /* actions */
+    /* REST actions */
     router.post('/', [SnippetsController, 'create']).as('post')
     router.put('/:id', [SnippetsController, 'update']).as('put')
     router.delete('/:id', [SnippetsController, 'delete']).as('delete')
+
+    /* Specific actions */
+    router.post('/:id/subscribe', [SnippetsController, 'subscribe']).as('subscribe')
+    router.post('/:id/unsubscribe', [SnippetsController, 'unsubscribe']).as('unsubscribe')
   })
   .prefix('/snippets')
   .use(middleware.auth())
