@@ -67,6 +67,10 @@ function toggleSubscription(snippetId: string, currentSubscriptionState?: boolea
 </script>
 
 <template>
+  <Link :href="rpc.$url('home')">
+    <Button variant="link"><- Vers la dashboard</Button>
+  </Link>
+
   <Block>
     <template #title> Bibliothèque de snippet </template>
 
