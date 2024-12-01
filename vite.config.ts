@@ -21,4 +21,9 @@ export default defineConfig({
     vue(),
     adonisjs({ entrypoints: ['inertia/app/app.ts'], reload: ['resources/views/**/*.edge'] }),
   ],
+  resolve: {
+    alias: {
+      '~/': `${import.meta.dirname}/inertia/`,
+    },
+  },
 })
