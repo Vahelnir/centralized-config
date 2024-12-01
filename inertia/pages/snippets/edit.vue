@@ -25,7 +25,7 @@ const form = useForm({
     <template #title> Modifier un snippet </template>
 
     <form
-      @submit.prevent="form.put(rpc.$url('snippets.edit', { params: { id: item.id } }))"
+      @submit.prevent="form.put(rpc.$url('snippets.put', { params: { id: item.id } }))"
       class="flex flex-col"
     >
       <label class="flex flex-col py-2">
