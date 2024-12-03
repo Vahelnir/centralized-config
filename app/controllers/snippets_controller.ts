@@ -8,8 +8,11 @@ import {
 import { HttpContext } from '@adonisjs/core/http'
 import { SnippetDto } from '../dtos/snippet_dto.js'
 import SnippetSubscription from '#models/snippet_subscription'
+import { UserRepository } from '../repositories/user_repository.js'
 
 export default class SnippetsController {
+  constructor(private userRepository: UserRepository) {}
+
   async index_view({ inertia, auth }: HttpContext) {
     const items = await Snippet.query().orderBy('created_at', 'desc')
     const subscriptions = await SnippetSubscription.findAllByUser(auth.getUserOrFail().id)
@@ -68,7 +71,8 @@ export default class SnippetsController {
 
     const snippet = await Snippet.find(params.id)
     if (snippet) {
-      auth.getUserOrFail().subscribeToSnippet(snippet)
+      const user = auth.getUserOrFail()
+      await this.userRepository.subscribeToSnippet(user, snippet)
     }
 
     return response.redirect().back()
@@ -79,7 +83,8 @@ export default class SnippetsController {
 
     const snippet = await Snippet.find(params.id)
     if (snippet) {
-      auth.getUserOrFail().unsubscribeFromSnippet(snippet)
+      const user = auth.getUserOrFail()
+      await this.userRepository.unsubscribeFromSnippet(user, snippet)
     }
 
     return response.redirect().back()

@@ -2,6 +2,7 @@
 import type DashboardController from '#controllers/dashboard_controller'
 import { InferPageProps } from '@adonisjs/inertia/types'
 import { Head, Link } from '@inertiajs/vue3'
+import { computed } from 'vue'
 import Block from '~/components/ui/block.vue'
 import Button from '~/components/ui/button.vue'
 import { useUser } from '~/composables/use_user'
@@ -13,6 +14,9 @@ defineProps<{
 }>()
 
 const user = useUser()
+const configurationLink = computed(() =>
+  rpc.$url('configuration', { params: { token: user.value.id } })
+)
 </script>
 
 <template>
@@ -36,7 +40,7 @@ const user = useUser()
       <Button variant="link">Voir ma configuration</Button>
     </Link>
 
-    <p>Lien vers ma configuration: TBD</p>
+    <p>Lien vers ma configuration: {{ configurationLink }}</p>
     <pre>{{ JSON.stringify(configuration, null, 2) }}</pre>
   </Block>
 </template>

@@ -17,6 +17,10 @@ type AuthGoogleCallbackGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['googleCallback'], false>
 }
+type ConfigurationIdGetHead = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/controllers/configuration_controller.ts')['configurationRequestValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/configuration_controller.ts').default['getConfiguration'], true>
+}
 type SnippetsGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['index_view'], false>
@@ -76,6 +80,14 @@ export interface ApiDefinition {
         '$get': AuthGoogleCallbackGetHead;
         '$head': AuthGoogleCallbackGetHead;
       };
+    };
+  };
+  'configuration': {
+    ':token': {
+      '$url': {
+      };
+      '$get': ConfigurationIdGetHead;
+      '$head': ConfigurationIdGetHead;
     };
   };
   'snippets': {
@@ -149,6 +161,13 @@ const routes = [
     path: '/auth/google/callback',
     method: ["GET","HEAD"],
     types: {} as AuthGoogleCallbackGetHead,
+  },
+  {
+    params: ["token"],
+    name: 'configuration',
+    path: '/configuration/:token',
+    method: ["GET","HEAD"],
+    types: {} as ConfigurationIdGetHead,
   },
   {
     params: [],

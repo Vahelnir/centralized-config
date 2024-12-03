@@ -12,6 +12,7 @@ import router from '@adonisjs/core/services/router'
 const DashboardController = () => import('#controllers/dashboard_controller')
 const AuthController = () => import('#controllers/auth_controller')
 const SnippetsController = () => import('#controllers/snippets_controller')
+const ConfigurationController = () => import('#controllers/configuration_controller')
 
 router.get('/', [DashboardController, 'index_view']).use(middleware.auth()).as('home')
 
@@ -30,6 +31,17 @@ router
   })
   .prefix('/auth')
   .as('auth')
+
+router
+  .get('/configuration/:token', [ConfigurationController, 'getConfiguration'])
+  .use(middleware.auth())
+  .as('configuration')
+
+router
+  .group(() => {})
+  .prefix('/users')
+  .use(middleware.auth())
+  .as('users')
 
 router
   .group(() => {
