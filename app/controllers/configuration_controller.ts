@@ -14,7 +14,7 @@ export const configurationRequestParamsValidator = vine.compile(
 export default class ConfigurationController {
   constructor(private userRepository: UserRepository) {}
 
-  async getConfiguration({ request, response, params }: HttpContext) {
+  async getConfiguration({ response, params }: HttpContext) {
     const [errors, validatedParams] = await configurationRequestParamsValidator.tryValidate(params)
     if (errors) {
       return response.badRequest(errors)
