@@ -1,0 +1,19 @@
+services:
+  web_migration:
+    build: .
+    command: node bin/console.js migration:run --force
+    volumes:
+      - ./docker-data/db:/app/tmp
+    env_file:
+      - '.env.production.local'
+
+  web:
+    depends_on:
+      - web_migration
+    build: .
+    env_file:
+      - '.env.production.local'
+    ports:
+      - '8000:3333'
+    volumes:
+      - ./docker-data/db:/app/tmp
