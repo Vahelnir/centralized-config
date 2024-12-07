@@ -23,10 +23,9 @@ createInertiaApp({
   },
 
   setup({ el, App, props, plugin }) {
-    const baseUrl = props.initialPage?.props?.BASE_URL
-    console.log('BASE_URL', baseUrl)
+    const baseUrl = props.initialPage?.props?.APP_URL
     if (!baseUrl || typeof baseUrl !== 'string') {
-      throw new Error("BASE_URL is missing from the initial page's props, or is not a string")
+      throw new Error('APP_URL is not a string')
     }
 
     createSSRApp({ render: () => h(App, props) })

@@ -1,3 +1,4 @@
+import env from '#start/env'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { TuyauPlugin } from '@tuyau/inertia/vue'
 import { renderToString } from '@vue/server-renderer'
@@ -14,10 +15,9 @@ export default function render(page: any) {
     },
 
     setup({ App, props, plugin }) {
-      const baseUrl = props.initialPage?.props?.BASE_URL
-      console.log('SSR BASE_URL', baseUrl)
-      if (!baseUrl || typeof baseUrl !== 'string') {
-        throw new Error("BASE_URL is missing from the initial page's props, or is not a string")
+      const baseUrl = env.get('APP_URL')
+      if (!baseUrl) {
+        throw new Error('APP_URL is not set in the environment variables')
       }
 
       return createSSRApp({ render: () => h(App, props) })
