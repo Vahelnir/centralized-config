@@ -5,7 +5,7 @@ import Button from '~/components/ui/button.vue'
 import Input from '~/components/ui/input.vue'
 import JsonEditor from '~/components/ui/json_editor.vue'
 import Textarea from '~/components/ui/textarea.vue'
-import { useTuyau } from '~/rpc'
+import { useTuyau } from '~/tuyau'
 
 const tuyau = useTuyau()
 

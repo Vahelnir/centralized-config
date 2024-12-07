@@ -6,7 +6,7 @@ import { createSSRApp, h, type DefineComponent } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { TuyauPlugin } from '@tuyau/inertia/vue'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
-import { createTuyauClient } from '~/rpc'
+import { createTuyauClient } from '~/tuyau'
 
 const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
 

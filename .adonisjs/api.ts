@@ -3,70 +3,92 @@ import type { InferInput } from '@vinejs/vine/types'
 
 type AuthLoginGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['login']>
+  response: MakeTuyauResponse<
+    import('../app/controllers/auth_controller.ts').default['login'],
+    false
+  >
 }
 type AuthLogoutGetHead = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['logout']>
+  response: MakeTuyauResponse<
+    import('../app/controllers/auth_controller.ts').default['logout'],
+    false
+  >
 }
 type AuthGoogleRedirectGetHead = {
   request: unknown
   response: MakeTuyauResponse<
-    import('../app/controllers/auth_controller.ts').default['googleRedirect']
+    import('../app/controllers/auth_controller.ts').default['googleRedirect'],
+    false
   >
 }
 type AuthGoogleCallbackGetHead = {
   request: unknown
   response: MakeTuyauResponse<
-    import('../app/controllers/auth_controller.ts').default['googleCallback']
+    import('../app/controllers/auth_controller.ts').default['googleCallback'],
+    false
   >
 }
 type ConfigurationIdGetHead = {
   request: unknown
   response: MakeTuyauResponse<
-    import('../app/controllers/configuration_controller.ts').default['getConfiguration']
+    import('../app/controllers/configuration_controller.ts').default['getConfiguration'],
+    false
   >
 }
 type SnippetsGetHead = {
   request: unknown
   response: MakeTuyauResponse<
-    import('../app/controllers/snippets_controller.ts').default['index_view']
+    import('../app/controllers/snippets_controller.ts').default['index_view'],
+    false
   >
 }
 type SnippetsCreateGetHead = {
   request: unknown
   response: MakeTuyauResponse<
-    import('../app/controllers/snippets_controller.ts').default['create_view']
+    import('../app/controllers/snippets_controller.ts').default['create_view'],
+    false
   >
 }
 type SnippetsIdEditGetHead = {
   request: unknown
   response: MakeTuyauResponse<
-    import('../app/controllers/snippets_controller.ts').default['edit_view']
+    import('../app/controllers/snippets_controller.ts').default['edit_view'],
+    false
   >
 }
 type SnippetsPost = {
   request: unknown
-  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['create']>
+  response: MakeTuyauResponse<
+    import('../app/controllers/snippets_controller.ts').default['create'],
+    false
+  >
 }
 type SnippetsIdPut = {
   request: MakeTuyauRequest<
     InferInput<(typeof import('../app/validators/snippet.ts'))['updateSnippetRequestValidator']>
   >
-  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['update']>
+  response: MakeTuyauResponse<
+    import('../app/controllers/snippets_controller.ts').default['update'],
+    true
+  >
 }
 type SnippetsIdDelete = {
   request: MakeTuyauRequest<
     InferInput<(typeof import('../app/validators/snippet.ts'))['deleteSnippetRequestValidator']>
   >
-  response: MakeTuyauResponse<import('../app/controllers/snippets_controller.ts').default['delete']>
+  response: MakeTuyauResponse<
+    import('../app/controllers/snippets_controller.ts').default['delete'],
+    true
+  >
 }
 type SnippetsIdSubscribePost = {
   request: MakeTuyauRequest<
     InferInput<(typeof import('../app/validators/snippet.ts'))['deleteSnippetRequestValidator']>
   >
   response: MakeTuyauResponse<
-    import('../app/controllers/snippets_controller.ts').default['subscribe']
+    import('../app/controllers/snippets_controller.ts').default['subscribe'],
+    true
   >
 }
 type SnippetsIdUnsubscribePost = {
@@ -74,7 +96,8 @@ type SnippetsIdUnsubscribePost = {
     InferInput<(typeof import('../app/validators/snippet.ts'))['deleteSnippetRequestValidator']>
   >
   response: MakeTuyauResponse<
-    import('../app/controllers/snippets_controller.ts').default['unsubscribe']
+    import('../app/controllers/snippets_controller.ts').default['unsubscribe'],
+    true
   >
 }
 export interface ApiDefinition {
@@ -242,4 +265,8 @@ const routes = [
 export const api = {
   routes,
   definition: {} as ApiDefinition,
+}
+declare module '@tuyau/inertia/types' {
+  type InertiaApi = typeof api
+  export interface Api extends InertiaApi {}
 }

@@ -2,7 +2,7 @@
 import { Head } from '@inertiajs/vue3'
 import Block from '~/components/ui/block.vue'
 import Button from '~/components/ui/button.vue'
-import { useTuyau } from '~/rpc'
+import { useTuyau } from '~/tuyau'
 
 const tuyau = useTuyau()
 </script>

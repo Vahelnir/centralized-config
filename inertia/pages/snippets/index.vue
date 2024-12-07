@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type SnippetsController from '#controllers/snippets_controller'
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { Link, router } from '@inertiajs/vue3'
+import { router } from '@inertiajs/vue3'
+import { Link } from '@tuyau/inertia/vue'
 import Block from '~/components/ui/block.vue'
 import Button from '~/components/ui/button.vue'
 import { ref, watch } from 'vue'
 import Toggle from '~/components/ui/toggle.vue'
-import { useTuyau } from '~/rpc'
+import { useTuyau } from '~/tuyau'
 
 const props = defineProps<{
   items: InferPageProps<SnippetsController, 'index_view'>['items']
@@ -35,9 +36,7 @@ function deleteSnippet(id: string) {
 const disableSubscriptionToggle = ref(false)
 
 function subscribe(snippetId: string) {
-  const subscribeUrl = tuyau.$url('snippets.subscribe', {
-    params: { id: snippetId },
-  })
+  const subscribeUrl = tuyau.snippets({ id: snippetId }).subscribe.$url()
   router.post(subscribeUrl, undefined, {
     only: ['subscriptions'],
     onFinish() {
@@ -47,9 +46,7 @@ function subscribe(snippetId: string) {
 }
 
 function unsubscribe(snippetId: string) {
-  const unsubscribeUrl = tuyau.$url('snippets.unsubscribe', {
-    params: { id: snippetId },
-  })
+  const unsubscribeUrl = tuyau.snippets({ id: snippetId }).subscribe.$url()
   router.post(unsubscribeUrl, undefined, {
     only: ['subscriptions'],
     onFinish() {
@@ -69,14 +66,14 @@ function toggleSubscription(snippetId: string, currentSubscriptionState?: boolea
 </script>
 
 <template>
-  <Link :href="tuyau.$url('home')">
+  <Link route="home">
     <Button variant="link"><- Vers la dashboard</Button>
   </Link>
 
   <Block>
     <template #title> Bibliothèque de snippet </template>
 
-    <Link :href="tuyau.$url('snippets.create')">
+    <Link route="snippets.create">
       <Button variant="success">Ajouter un snippet</Button>
     </Link>
 
@@ -103,13 +100,7 @@ function toggleSubscription(snippetId: string, currentSubscriptionState?: boolea
           </p>
         </div>
         <div class="pt-2">
-          <Link
-            :href="
-              tuyau.$url('snippets.edit', {
-                params: { id: item.id },
-              })
-            "
-          >
+          <Link route="snippets.edit" :params="{ id: item.id }">
             <Button variant="info" as="span">Modifier</Button>
           </Link>
           <Button variant="danger" @click="deleteSnippet(item.id)">Supprimer</Button>

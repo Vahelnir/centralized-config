@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type DashboardController from '#controllers/dashboard_controller'
 import { InferPageProps } from '@adonisjs/inertia/types'
-import { Head, Link } from '@inertiajs/vue3'
+import { Head } from '@inertiajs/vue3'
+import { Link } from '@tuyau/inertia/vue'
 import { computed } from 'vue'
 import Block from '~/components/ui/block.vue'
 import Button from '~/components/ui/button.vue'
 import { useUser } from '~/composables/use_user'
-import { useTuyau } from '~/rpc'
+import { useTuyau } from '~/tuyau'
 
 defineProps<{
   configuration: InferPageProps<DashboardController, 'index_view'>['configuration']
@@ -26,7 +27,7 @@ const configurationLink = computed(() =>
 
   <Block>
     Bonjour {{ user.fullName }} !
-    <Link :href="tuyau.$url('auth.logout')">
+    <Link route="auth.logout">
       <Button variant="danger">Déconnexion</Button>
     </Link>
   </Block>
@@ -34,13 +35,13 @@ const configurationLink = computed(() =>
   <Block>
     <template #title> Configuration </template>
 
-    <Link :href="tuyau.$url('snippets.index')">
+    <Link route="snippets.index">
       <Button variant="link">Composer ma configuration</Button>
     </Link>
     |
-    <Link href="#">
+    <a href="#">
       <Button variant="link">Voir ma configuration</Button>
-    </Link>
+    </a>
 
     <p>Lien vers ma configuration: {{ configurationLink }}</p>
     <pre>{{ JSON.stringify(configuration, null, 2) }}</pre>
