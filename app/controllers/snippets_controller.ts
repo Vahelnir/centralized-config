@@ -9,7 +9,9 @@ import { HttpContext } from '@adonisjs/core/http'
 import { SnippetDto } from '../dtos/snippet_dto.js'
 import SnippetSubscription from '#models/snippet_subscription'
 import { UserRepository } from '../repositories/user_repository.js'
+import { inject } from '@adonisjs/core'
 
+@inject()
 export default class SnippetsController {
   constructor(private userRepository: UserRepository) {}
 
