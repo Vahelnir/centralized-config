@@ -1,5 +1,6 @@
 import { defineConfig } from '@adonisjs/inertia'
 import type { InferSharedProps } from '@adonisjs/inertia/types'
+import env from '#start/env'
 
 const inertiaConfig = defineConfig({
   /**
@@ -13,6 +14,7 @@ const inertiaConfig = defineConfig({
   sharedData: {
     errors: (ctx) => ctx.session?.flashMessages.get('errors'),
     user: (ctx) => ctx.auth?.user,
+    BASE_URL: () => env.get('APP_URL'),
   },
 
   /**

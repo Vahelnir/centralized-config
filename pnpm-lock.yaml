@@ -50,6 +50,9 @@ importers:
       '@tuyau/core':
         specifier: ^0.2.2
         version: 0.2.2(@adonisjs/core@6.16.0(@adonisjs/assembler@7.8.2(typescript@5.7.2))(@vinejs/vine@2.1.0)(edge.js@6.2.0))
+      '@tuyau/inertia':
+        specifier: ^0.0.6
+        version: 0.0.6(@inertiajs/vue3@1.2.0(vue@3.5.13(typescript@5.7.2)))(@tuyau/client@0.2.1)(vue@3.5.13(typescript@5.7.2))
       '@tuyau/utils':
         specifier: ^0.0.6
         version: 0.0.6
@@ -1065,6 +1068,24 @@ packages:
     engines: {node: '>=20.6.0'}
     peerDependencies:
       '@adonisjs/core': ^6.2.0
+
+  '@tuyau/inertia@0.0.6':
+    resolution: {integrity: sha512-SSXWntHolcf6N5qQRJi96WwiutDejLHHIuOhc7euqs5Kw/RJjaHxdSfI0QGCCy2ljuNwrxnf1MIFhl/GPEiYwA==}
+    peerDependencies:
+      '@inertiajs/react': ^1.0.16
+      '@inertiajs/vue3': ^1.0.16
+      '@tuyau/client': 0.2.1
+      react: ^18.3.1
+      vue: ^3.4.27
+    peerDependenciesMeta:
+      '@inertiajs/react':
+        optional: true
+      '@inertiajs/vue3':
+        optional: true
+      react:
+        optional: true
+      vue:
+        optional: true
 
   '@tuyau/utils@0.0.4':
     resolution: {integrity: sha512-ex6CAJNLiTuOvx7nUrgs8FwNG/t88Mi8QTLSO3muHbB6vBSpYimZ6iSUkk4cjEFd4XDy0y+24GDgXKoBfGf4ag==}
@@ -4778,6 +4799,13 @@ snapshots:
     dependencies:
       '@adonisjs/core': 6.16.0(@adonisjs/assembler@7.8.2(typescript@5.7.2))(@vinejs/vine@2.1.0)(edge.js@6.2.0)
       ts-morph: 23.0.0
+
+  '@tuyau/inertia@0.0.6(@inertiajs/vue3@1.2.0(vue@3.5.13(typescript@5.7.2)))(@tuyau/client@0.2.1)(vue@3.5.13(typescript@5.7.2))':
+    dependencies:
+      '@tuyau/client': 0.2.1
+    optionalDependencies:
+      '@inertiajs/vue3': 1.2.0(vue@3.5.13(typescript@5.7.2))
+      vue: 3.5.13(typescript@5.7.2)
 
   '@tuyau/utils@0.0.4': {}
 

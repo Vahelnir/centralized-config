@@ -2,7 +2,9 @@
 import { Head } from '@inertiajs/vue3'
 import Block from '~/components/ui/block.vue'
 import Button from '~/components/ui/button.vue'
-import { rpc } from '~/rpc'
+import { useTuyau } from '~/rpc'
+
+const tuyau = useTuyau()
 </script>
 
 <template>
@@ -11,7 +13,7 @@ import { rpc } from '~/rpc'
   <Block>
     <template #title> Connexion </template>
 
-    <a :href="rpc.$url('auth.google')">
+    <a :href="tuyau.$url('auth.google')">
       <Button variant="primary">Connexion avec Google</Button>
     </a>
   </Block>

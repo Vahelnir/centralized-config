@@ -1,7 +1,25 @@
-import { createTuyau } from '@tuyau/client'
+import { createTuyau, TuyauClient } from '@tuyau/client'
+import { getClientKey } from '@tuyau/inertia/vue'
 import { api } from '../.adonisjs/api.js'
+import { inject } from 'vue'
 
-export const rpc = createTuyau({
-  api,
-  baseUrl: 'http://localhost:3333',
-})
+type Api = typeof api
+export type TuyauAppClient = TuyauClient<Api['definition'], Api['routes']>
+
+export function createTuyauClient(baseUrl: string) {
+  const client = createTuyau({
+    api,
+    baseUrl: baseUrl ?? '',
+  })
+
+  return client
+}
+
+export function useTuyau() {
+  const client = inject<TuyauAppClient>(getClientKey())
+  if (!client) {
+    throw new Error('useTuyau() must be used inside an Inertia app')
+  }
+
+  return client
+}

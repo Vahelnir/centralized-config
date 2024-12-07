@@ -4,14 +4,16 @@ import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Link, router } from '@inertiajs/vue3'
 import Block from '~/components/ui/block.vue'
 import Button from '~/components/ui/button.vue'
-import { rpc } from '~/rpc'
 import { ref, watch } from 'vue'
 import Toggle from '~/components/ui/toggle.vue'
+import { useTuyau } from '~/rpc'
 
 const props = defineProps<{
   items: InferPageProps<SnippetsController, 'index_view'>['items']
   subscriptions: InferPageProps<SnippetsController, 'index_view'>['subscriptions']
 }>()
+
+const tuyau = useTuyau()
 
 watch(
   props,
@@ -26,14 +28,14 @@ function deleteSnippet(id: string) {
     return
   }
 
-  const deleteUrl = rpc.$url('snippets.delete', { params: { id } })
+  const deleteUrl = tuyau.$url('snippets.delete', { params: { id } })
   router.delete(deleteUrl, { only: ['items'] })
 }
 
 const disableSubscriptionToggle = ref(false)
 
 function subscribe(snippetId: string) {
-  const subscribeUrl = rpc.$url('snippets.subscribe', {
+  const subscribeUrl = tuyau.$url('snippets.subscribe', {
     params: { id: snippetId },
   })
   router.post(subscribeUrl, undefined, {
@@ -45,7 +47,7 @@ function subscribe(snippetId: string) {
 }
 
 function unsubscribe(snippetId: string) {
-  const unsubscribeUrl = rpc.$url('snippets.unsubscribe', {
+  const unsubscribeUrl = tuyau.$url('snippets.unsubscribe', {
     params: { id: snippetId },
   })
   router.post(unsubscribeUrl, undefined, {
@@ -67,14 +69,14 @@ function toggleSubscription(snippetId: string, currentSubscriptionState?: boolea
 </script>
 
 <template>
-  <Link :href="rpc.$url('home')">
+  <Link :href="tuyau.$url('home')">
     <Button variant="link"><- Vers la dashboard</Button>
   </Link>
 
   <Block>
     <template #title> Bibliothèque de snippet </template>
 
-    <Link :href="rpc.$url('snippets.create')">
+    <Link :href="tuyau.$url('snippets.create')">
       <Button variant="success">Ajouter un snippet</Button>
     </Link>
 
@@ -103,7 +105,7 @@ function toggleSubscription(snippetId: string, currentSubscriptionState?: boolea
         <div class="pt-2">
           <Link
             :href="
-              rpc.$url('snippets.edit', {
+              tuyau.$url('snippets.edit', {
                 params: { id: item.id },
               })
             "

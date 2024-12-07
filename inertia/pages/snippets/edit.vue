@@ -7,7 +7,9 @@ import Button from '~/components/ui/button.vue'
 import Input from '~/components/ui/input.vue'
 import JsonEditor from '~/components/ui/json_editor.vue'
 import Textarea from '~/components/ui/textarea.vue'
-import { rpc } from '~/rpc'
+import { useTuyau } from '~/rpc'
+
+const tuyau = useTuyau()
 
 const { item } = defineProps<{
   item: InferPageProps<SnippetsController, 'edit_view'>['item']
@@ -25,7 +27,7 @@ const form = useForm({
     <template #title> Modifier un snippet </template>
 
     <form
-      @submit.prevent="form.put(rpc.$url('snippets.put', { params: { id: item.id } }))"
+      @submit.prevent="form.put(tuyau.$url('snippets.put', { params: { id: item.id } }))"
       class="flex flex-col"
     >
       <label class="flex flex-col py-2">

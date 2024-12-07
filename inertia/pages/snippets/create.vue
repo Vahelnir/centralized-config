@@ -5,7 +5,9 @@ import Button from '~/components/ui/button.vue'
 import Input from '~/components/ui/input.vue'
 import JsonEditor from '~/components/ui/json_editor.vue'
 import Textarea from '~/components/ui/textarea.vue'
-import { rpc } from '~/rpc'
+import { useTuyau } from '~/rpc'
+
+const tuyau = useTuyau()
 
 const form = useForm({
   name: '',
@@ -18,7 +20,7 @@ const form = useForm({
   <Block>
     <template #title> Créer un snippet </template>
 
-    <form @submit.prevent="form.post(rpc.$url('snippets.post'))" class="flex flex-col">
+    <form @submit.prevent="form.post(tuyau.$url('snippets.post'))" class="flex flex-col">
       <label class="flex flex-col py-2">
         Nom du snippet:
         <Input type="text" v-model="form.name" placeholder="Nom du snippet" />

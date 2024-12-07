@@ -6,16 +6,18 @@ import { computed } from 'vue'
 import Block from '~/components/ui/block.vue'
 import Button from '~/components/ui/button.vue'
 import { useUser } from '~/composables/use_user'
-import { rpc } from '~/rpc'
+import { useTuyau } from '~/rpc'
 
 defineProps<{
   configuration: InferPageProps<DashboardController, 'index_view'>['configuration']
   mergeErrors: InferPageProps<DashboardController, 'index_view'>['mergeErrors']
 }>()
 
+const tuyau = useTuyau()
+
 const user = useUser()
 const configurationLink = computed(() =>
-  rpc.$url('configuration', { params: { token: user.value.id } })
+  tuyau.$url('configuration', { params: { token: user.value.id } })
 )
 </script>
 
@@ -24,7 +26,7 @@ const configurationLink = computed(() =>
 
   <Block>
     Bonjour {{ user.fullName }} !
-    <Link :href="rpc.$url('auth.logout')">
+    <Link :href="tuyau.$url('auth.logout')">
       <Button variant="danger">Déconnexion</Button>
     </Link>
   </Block>
@@ -32,7 +34,7 @@ const configurationLink = computed(() =>
   <Block>
     <template #title> Configuration </template>
 
-    <Link :href="rpc.$url('snippets.index')">
+    <Link :href="tuyau.$url('snippets.index')">
       <Button variant="link">Composer ma configuration</Button>
     </Link>
     |
