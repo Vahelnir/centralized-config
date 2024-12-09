@@ -46,7 +46,7 @@ function subscribe(snippetId: string) {
 }
 
 function unsubscribe(snippetId: string) {
-  const unsubscribeUrl = tuyau.snippets({ id: snippetId }).subscribe.$url()
+  const unsubscribeUrl = tuyau.snippets({ id: snippetId }).unsubscribe.$url()
   router.post(unsubscribeUrl, undefined, {
     only: ['subscriptions'],
     onFinish() {
